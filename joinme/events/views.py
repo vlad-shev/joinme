@@ -1,8 +1,7 @@
 from django.shortcuts import render, redirect
 from django.core import serializers
 from . import models
-from django.http import Http404, HttpResponse, JsonResponse
-from datetime import datetime
+from django.http import Http404, JsonResponse
 
 # Create your views here.
 
@@ -13,13 +12,11 @@ def home(request):
 
 def gallery(request):
     data = serializers.serialize('json', models.Event.objects.all())
-  #  data = simplejson.dumps(data)
     return JsonResponse(data, safe=False)
 
 
 def post_create(request):
     data = dict()
-
     if request.method == 'POST':
         title = request.POST.get('title')
         description = request.POST.get('description')
@@ -28,9 +25,8 @@ def post_create(request):
                 'title': 'Is required'
             }
         else:
-            event = models.Event.objects.create(title=title, description=description)
+          event = models.Event.objects.create(title=title, description=description)
         return redirect('post_show', pk=event.pk)
-
     return render(request, 'post_create.html', data)
 
 
