@@ -1,1 +1,16 @@
 ﻿{% extends 'base.html' %}
+
+{% block content %}
+    <form action="" method="post">
+        {%csrf_token%}
+        <div class="md-form">
+            <input type="text" name="title" id="form1" class="form-control">
+            <label for="form1">Title</label>
+        </div>
+        <div class="md-form">
+            <textarea type="text" name="description" id="textareaBasic" class="form-control md-textarea" rows="3"></textarea>
+            <label for="textareaBasic">Description</label>
+        </div>
+        <input class="btn btn-primary" type="submit" name="" value="Save">
+    </form>
+{% endblock content %}
