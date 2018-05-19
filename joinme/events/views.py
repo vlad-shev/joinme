@@ -1,5 +1,8 @@
 from django.shortcuts import render, redirect
-from django.http import Http404
+from django.core import serializers
+from . import models
+from django.http import Http404, HttpResponse, JsonResponse
+from datetime import datetime
 
 # Create your views here.
 
@@ -9,44 +12,53 @@ def home(request):
 
 
 def gallery(request):
-    posts = models.Post.objects.all().order_by('-updated_at')
-    data = dict(
-        posts=posts
-    )
-    return render(request, 'gallery.html', data)
+    data = serializers.serialize('json', models.Event.objects.all())
+  #  data = simplejson.dumps(data)
+    return JsonResponse(data, safe=False)
 
 
 def post_create(request):
-    data = dict()
+    data = serializers.serialize('json')
     if request.method == 'POST':
         title = request.POST.get('title')
-        body = request.POST.get('body')
-        if not title:
+        description = request.POST.get('description')
+        image = request.POST.get('image')
+        event_location = request.POST.get('event_location')
+        event_date = request.POST.get('event_date')
+        publication_date = request.POST.get('publication_date')
+        if not title or not description or not event_location or not event_date:
             data['errors'] = {
-                'title': 'Is required'
+                'Missed field': 'Is required'
             }
         else:
-            post = models.Post.objects.create(title=title, body=body)
-            return redirect('post_show', pk=post.pk)
+            event = models.Event.objects.create(
+                title=title,
+                description=description,
+                image=image,
+                event_location=event_location,
+                event_date=event_date,
+                publication_date=publication_date
+            )
+            return redirect('post_show', pk=event.pk)
 
     return render(request, 'post_create.html', data)
 
 
-def post_show(request):
+def post_show(request, pk):
     try:
-        post = models.Post.objects.get(pk=pk)
-    except models.Post.DoesNotExist:
+        event = models.Event.objects.get(pk=pk)
+    except models.Event.DoesNotExist:
         raise Http404('Post with id <{}> does not exist.'.format(pk))
-    data = dict(
-        post=post
+    data = serializers.serialize('json',
+        [event]
     )
-    return render(request, 'post_show.html', data)
+    return JsonResponse(data, safe=False)
 
 
 def post_update(request):
     try:
-        post = models.Post.objects.get(pk=pk)
-    except models.Post.DoesNotExist:
+        post = models.Event.objects.get(pk=pk)
+    except models.Event.DoesNotExist:
         raise Http404('Post with id <{}> does not exist.'.format(pk))
     data = dict()
     if request.method == 'POST':
@@ -66,8 +78,8 @@ def post_update(request):
 
 def post_delete(request, pk):
     try:
-        post = models.Post.objects.get(pk=pk)
-    except models.Post.DoesNotExist:
+        post = models.Event.objects.get(pk=pk)
+    except models.Event.DoesNotExist:
         raise Http404('Post with id <{}> does not exist.'.format(pk))
     if request.method == 'POST':
         post.delete()

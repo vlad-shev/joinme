@@ -1,1 +1,26 @@
 ﻿{% extends 'base.html' %}
+
+{% block main %}
+    <br>
+    <h2>Events:</h2>
+    {% for event in events %}
+        <div class="row mt-4">
+            <div class="col-6 card ">
+                <div class="col-body">
+                    <h3 class="card-title">
+                        {{ event.title }}
+                    </h3>
+                    <p class="card-text">
+                        {{ event.description }}
+                    </p>
+                    <hr/>
+                    <span class="text-muted">
+                        {{ event.publication_date }}
+                    </span>
+                </div>
+
+            </div>
+        </div>
+    {% endfor %}
+{% endblock main %}
+
