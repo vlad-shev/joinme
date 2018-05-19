@@ -15,14 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+import events.views as views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('home/', views.home),
-    path('gallery/', views.gallery),
-    path('gallery/create', views.post_create),
-    path('gallery/<int:pk>/show', views.post_show),
-    path('gallery/<int:pk>/update', views.post_update),
-    path('gallery/<int:pk>/delete', views.post_delete),
-
+    path('gallery/', views.gallery, name='gallery'),
+    path('gallery/create', views.post_create, name='post_create'),
+    path('gallery/<int:pk>/show', views.post_show, name='post_show'),
+    path('gallery/<int:pk>/update', views.post_update, name='post_update'),
+    path('gallery/<int:pk>/delete', views.post_delete, name='post_delete'),
 ]
