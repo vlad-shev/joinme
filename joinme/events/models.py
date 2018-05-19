@@ -8,7 +8,7 @@ class Event(models.Model):
     event_location = models.CharField(max_length=128, null=True)
     #user = models.ForeignKey('User', on_delete=models.CASCADE, null=True)
     event_date = models.DateTimeField('event date published', null=True)
-    publication_date = models.DateTimeField('post date published', auto_now=True)
+    publication_date = models.DateTimeField('post date published', auto_now_add=True)
 
     def __str__(self):
         return 'Post({}* {})'.format(self.id, self.title)
