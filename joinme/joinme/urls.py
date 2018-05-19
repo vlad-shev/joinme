@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 import events.views as views
+import accounts.views as acc_views
 
 
 urlpatterns = [
@@ -26,3 +27,5 @@ urlpatterns = [
     path('gallery/<int:pk>/show', views.post_show, name='post_show'),
     path('gallery/<int:pk>/update', views.post_update, name='post_update'),
     path('gallery/<int:pk>/delete', views.post_delete, name='post_delete'),
+    path('account/create', acc_views.account_create, name='account_create'),
+]
