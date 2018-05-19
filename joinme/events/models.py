@@ -9,7 +9,7 @@ class Event(models.Model):
     image = models.FilePathField(path='static/events/images', null=True)
     event_location = models.CharField(max_length=128, null=True)
     #user = models.ForeignKey('User', on_delete=models.CASCADE, null=True)
-    event_date = models.DateTimeField('event date published', null=True)
+    event_date = models.DateField('event date published', null=True)
     publication_date = models.DateTimeField('post date published', auto_now_add=True)
 
     def __str__(self):
