@@ -22,7 +22,7 @@ import accounts.views as acc_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('home/', views.home),
-    path('gallery/', views.gallery, name='gallery'),
+        path('gallery/', views.gallery, name='gallery'),
     path('gallery/create', views.post_create, name='post_create'),
     path('gallery/<int:pk>/show', views.post_show, name='post_show'),
     path('gallery/<int:pk>/update', views.post_update, name='post_update'),

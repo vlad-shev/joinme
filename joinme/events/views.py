@@ -16,7 +16,7 @@ def gallery(request):
 
 
 def post_create(request):
-    data = serializers.serialize('json')
+    #data = serializers.serialize('json')
     if request.method == 'POST':
         title = request.POST.get('title')
         description = request.POST.get('description')
@@ -38,7 +38,7 @@ def post_create(request):
                 publication_date=publication_date
             )
             return redirect('post_show', pk=event.pk)
-
+    data = {}
     return render(request, 'post_create.html', data)
 
 
