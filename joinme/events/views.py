@@ -14,7 +14,6 @@ def home(request):
 
 def gallery(request):
     data = serializers.serialize('json', models.Event.objects.all())
-  #  data = simplejson.dumps(data)
     return JsonResponse(data, safe=False)
 
 @csrf_exempt
