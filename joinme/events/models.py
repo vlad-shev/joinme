@@ -1,5 +1,3 @@
-import datetime
-from django.utils import timezone
 from django.db import models
 
 
@@ -19,4 +17,4 @@ class Event(models.Model):
 
     def was_published_recently(self):
         now = timezone.now()
-        return now - datetime.timedelta(days=1) <= self.publication_date <= now
+        return now - datetime.timedelta(days=1) <= self.publication_date <= no

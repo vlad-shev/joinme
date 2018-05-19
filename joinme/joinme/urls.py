@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path
 import events.views as views
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('home/', views.home),
@@ -25,4 +26,3 @@ urlpatterns = [
     path('gallery/<int:pk>/show', views.post_show, name='post_show'),
     path('gallery/<int:pk>/update', views.post_update, name='post_update'),
     path('gallery/<int:pk>/delete', views.post_delete, name='post_delete'),
-]
