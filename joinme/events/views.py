@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from django.core import serializers
 from . import models
-from django.http import Http404, JsonResponse
+from django.http import Http404, HttpResponse, JsonResponse
+from datetime import datetime
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 
@@ -14,19 +16,25 @@ def gallery(request):
     data = serializers.serialize('json', models.Event.objects.all())
     return JsonResponse(data, safe=False)
 
-
+@csrf_exempt
 def post_create(request):
     data = dict()
     if request.method == 'POST':
         title = request.POST.get('title')
         description = request.POST.get('description')
-        if not title:
+        event_location = request.POST.get('event_location')
+        event_date = request.POST.get('event_date')
+        if not (title or description or event_location or event_date):
             data['errors'] = {
-                'title': 'Is required'
+                'something': 'Is required'
             }
         else:
-          event = models.Event.objects.create(title=title, description=description)
-        return redirect('post_show', pk=event.pk)
+            event = models.Event.objects.create(
+                title=title,
+                description=description,
+                event_date=event_date,
+                event_location=event_location)
+            return redirect('post_show', pk=event.pk)
     return render(request, 'post_create.html', data)
 
 
