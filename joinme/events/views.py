@@ -25,7 +25,7 @@ def post_create(request):
                 'title': 'Is required'
             }
         else:
-          event = models.Event.objects.create(title=title, description=description)
+            event = models.Event.objects.create(title=title, description=description)
         return redirect('post_show', pk=event.pk)
     return render(request, 'post_create.html', data)
 
